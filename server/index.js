@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.send('🚀 Welcome to the Calculation API!');
+  res.send('APIs are working properly');
 });
 
 app.post('/api/calculate', (req, res) => {
