@@ -1,12 +1,15 @@
 const express = require('express');
 const cors = require('cors');
-const axios = require('axios');
+const { watchChanges } = require('./watcher');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 🚀 Custom Calculate API
+app.get('/', (req, res) => {
+  res.send('🚀 Welcome to the Calculation API!');
+});
+
 app.post('/api/calculate', (req, res) => {
   const { operation, num1, num2 } = req.body;
 
@@ -22,12 +25,16 @@ app.post('/api/calculate', (req, res) => {
   }
 
   const result = operation === 'add' ? num1 + num2 : num1 - num2;
+
   res.json({
     status: 200,
     message: 'Calculation successful',
     result,
   });
 });
+watchChanges('./');
 
 const PORT = 5000;
-app.listen(PORT, () => console.log(`✅ Server running at http://localhost:${PORT}`));
+app.listen(PORT, () => {
+  console.log(`✅ Server running at http://localhost:${PORT}`);
+});
